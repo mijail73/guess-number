@@ -23,8 +23,25 @@
       game.message = document.querySelector('.message');
       game.guessInput = document.querySelector('input');
       game.btn = document.querySelector('button');
+      game.btn.addEventListener('click', guessValue);
       init();
     });
+    function guessValue() {
+      let tempGuess = game.guessInput.value;
+      tempGuess = parseInt(tempGuess);
+      if (isNaN(tempGuess)) message('Please enter only digits', 'red');
+      else if (tempGuess === game.num) {
+        message('Correct you guessed ' + game.num, 'green');
+        game.guessInput.style.borderColor = 'green';
+      } else {
+        let holder =
+          tempGuess > game.num
+            ? { m: 'Was lower', c: 'blue' }
+            : { m: 'Was Higher', c: 'purple' };
+        message(holder.m, holder.c);
+      }
+      console.log('Your guess is ' + game.guessInput.value);
+    }
     function init() {
       game.num = ranNumber(game.min, game.max);
       let tempMes =
